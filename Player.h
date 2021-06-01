@@ -1,8 +1,11 @@
 class Player{
     private:
-        static int score;
+        int score;
     
     public:
+    	Player(){
+    		score=0;
+		}
         void setScore(){
             score++;
         }
@@ -10,5 +13,3 @@ class Player{
             return score;
         }
 };
-
-int Player::score=0;
