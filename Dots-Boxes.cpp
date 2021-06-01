@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <windows.h>
-#include "class.h"
+#include "Player.h"
 using namespace std;
 
 static char board[7][7];
@@ -26,12 +26,21 @@ int main(){
     }
 
     int turn=0;
-    while(p1.getScore()+p2.getScore()!=9){
+    while(p1.getScore()+p2.getScore()<9){
         turn%=2;
         pTurn(turn);
-
         turn++;
     }
+    
+    printBoard();
+    cout<< endl;
+    
+    if(p1.getScore()>p2.getScore()){
+    	cout<< "Player 1 wins!!!\n";
+	}
+	else if(p2.getScore()>p1.getScore()){
+		cout<< "Player 2 wins!!!\n";
+	}
 
     return 0;
 }
@@ -54,7 +63,7 @@ void pTurn(int turn){
     cout<< "Enter column:     ";
     cin>> column;
     fill(row, column);
-
+    check(row, column, turn);
 }
 
 //print function 
@@ -107,7 +116,7 @@ void check(int row, int column, int turn){
     }
 
     else if(row==6){
-        checkDown(row, column, turn+1);
+        checkUp(row, column, turn+1);
     }
     
     if(column==0){
@@ -126,9 +135,9 @@ void check(int row, int column, int turn){
 
 void checkLeft(int row, int column, int turn){
 
-    if(board[row][column-2]='|'){
-        if(board[row-1][column-1]='-'){
-            if(board[row+1][column-1]='-'){
+    if(board[row][column-2]=='|'){
+        if(board[row-1][column-1]=='-'){
+            if(board[row+1][column-1]=='-'){
                 char n='0'+turn;
                 board[row][column-1]=n;
                 if(turn==1){
@@ -143,9 +152,9 @@ void checkLeft(int row, int column, int turn){
 }
 
 void checkRight(int row, int column, int turn){
-    if(board[row][column+2]='|'){
-        if(board[row-1][column+1]='-'){
-            if(board[row+1][column+1]='-'){
+    if(board[row][column+2]=='|'){
+        if(board[row-1][column+1]=='-'){
+            if(board[row+1][column+1]=='-'){
                 char n='0'+turn;
                 board[row][column+1]=n;
                 if(turn==1){
@@ -160,9 +169,9 @@ void checkRight(int row, int column, int turn){
 }
 
 void checkUp(int row, int column, int turn){
-    if(board[row-2][column]='-'){
-        if(board[row-1][column-1]='|'){
-            if(board[row-1][column+1]='|'){
+    if(board[row-2][column]=='-'){
+        if(board[row-1][column-1]=='|'){
+            if(board[row-1][column+1]=='|'){
                 char n='0'+turn;
                 board[row-1][column]=n;
                 if(turn==1){
@@ -177,9 +186,9 @@ void checkUp(int row, int column, int turn){
 }
 
 void checkDown(int row, int column, int turn){
-    if(board[row+2][column]='-'){
-        if(board[row+1][column-1]='|'){
-            if(board[row+1][column+1]='|'){
+    if(board[row+2][column]=='-'){
+        if(board[row+1][column-1]=='|'){
+            if(board[row+1][column+1]=='|'){
                 char n='0'+turn;
                 board[row+1][column]=n;
                 if(turn==1){
